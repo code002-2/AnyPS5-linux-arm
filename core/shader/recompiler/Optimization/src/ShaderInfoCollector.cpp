@@ -101,7 +101,7 @@ void ValidateValueReferences(const IrProgram& program, ShaderStageInputInfo inpu
                         !component->HasImmediate() || component->Type() != IrType::U32 || !mode->HasImmediate() || mode->Type() != IrType::U32) {
                         return Fail("interpolation parameter reference is invalid");
                     }
-                    if (input->ImmediateU32() >= inputInfo.pixel->inputNum || component->ImmediateU32() >= 4u || mode->ImmediateU32() >= 3u) {
+                    if (inputInfo.pixel->inputNum != 0 && (input->ImmediateU32() >= inputInfo.pixel->inputNum || component->ImmediateU32() >= 4u || mode->ImmediateU32() >= 3u)) {
                         return Fail("interpolation parameter reference is out of range (attribute " + std::to_string(input->ImmediateU32()) + " component " + std::to_string(component->ImmediateU32()) + " mode " + std::to_string(mode->ImmediateU32()) + ", " + std::to_string(inputInfo.pixel->inputNum) + " inputs)");
                     }
                     break;

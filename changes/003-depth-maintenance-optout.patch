@@ -1,0 +1,12 @@
+# Allow depth maintenance draws to be ignored through an environment variable
+
+--- a/core/libs/prx/libSceAgcDriver/Graphics/src/State.cpp
++++ b/core/libs/prx/libSceAgcDriver/Graphics/src/State.cpp
+@@ -966,6 +966,7 @@
+ 
+ std::string DepthMaintenanceRejection(const QueueState& queue) {
+     if (DepthResummarizeDrawsNothing(queue)) return {};
++    if (std::getenv("APS5_ALLOW_DEPTH_MAINTENANCE") != nullptr) return {};
+     const auto control = find(queue.context, 0x000);
+     if (control == queue.context.end() || (control->second & ~0x2fe3u) == 0) return {};
+     const auto depthControl = find(queue.context, 0x200);
